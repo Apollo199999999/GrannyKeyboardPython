@@ -1,0 +1,1 @@
+rmb to install tkinter + keyboard on cubic before loading
