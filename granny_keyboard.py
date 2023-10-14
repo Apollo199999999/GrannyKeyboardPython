@@ -1,21 +1,59 @@
+#region Imports
+
 import tkinter as tk
 import tkinter.font as font
 from pynput import keyboard
 import random
+from pydub import AudioSegment
+from pydub.playback import play
 
+#endregion
+
+#region Global variables
+
+# Variable to indicate to open a window
 open_window = False
 
-def key_press(key):
-    if key is not keyboard.Key.backspace:
-        # Indicate to spawn_window() that we should spawn a window
-        global open_window
-        open_window = True
+# Variable to indicate to close a window
+close_window = False
+
+# Variable to store opened window instances
+window_instances = []
+
+#endregion
+
+#region Helper function to convert rgb values to hex, for tkinter background
 
 def rgbtohex(r,g,b):
     return f'#{r:02x}{g:02x}{b:02x}'
 
+#endregion
+
+#region keypress event handler that runs in a separate thread
+
+def key_press(key):
+    if key is not keyboard.Key.backspace:
+        # Indicate that we should spawn a window
+        global open_window
+        open_window = True
+
+        # Play Granny Scream
+        sound = AudioSegment.from_wav("./Resources/Granny.wav")
+        play(sound)
+    else:
+        # If the backspace key is pressed, we be kind to the user and remove one granny window
+        # Indicate that we should close a window
+        global close_window
+        close_window = True
+
+#endregion
+
+#region spawn_window() function that controls whether a window is spawned or destroyed, runs on Main thread
+
 def spawn_window():
     global open_window
+    global close_window
+    global window_instances
     while True:
         if open_window == True:
             # Spawn window on keydown
@@ -59,18 +97,37 @@ def spawn_window():
             no_btn["state"] = "disabled"
             no_btn["font"] = font.Font(size=11)
 
+            # Add this window to opened window instances array
+            window_instances.append(window)
+
+            # Set open_window to false to prevent more windows from opening
             open_window = False
-            
+
+        if close_window == True:
+            # Remove the last window
+            window_instances[len(window_instances) - 1].destroy()
+            window_instances.pop()
+
+            # Set close_window to false
+            close_window = False
+
         # Update root no matter what so stuff doesnt freeze
         root.update()
 
+#endregion
 
+#region Main function
 
-listener = keyboard.Listener(
-    on_press=key_press)
-listener.start()
+if __name__ == "__main__":
+    # Start listening for keypresses
+    listener = keyboard.Listener(
+        on_press=key_press)
+    listener.start()
 
-root = tk.Tk()
-root.withdraw()
-spawn_window()
-root.mainloop()
+    # Create a root tk window which is hidden to spawn Granny Windows later
+    root = tk.Tk()
+    root.withdraw()
+    spawn_window()
+    root.mainloop()
+
+#endregion
