@@ -13,3 +13,5 @@
   * Pydub
   
   * Simpleaudio
+
+  * ffmpeg libavcodec-extra

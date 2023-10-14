@@ -68,8 +68,8 @@ def spawn_window():
             window["background"] = rgbtohex(r=r, g=g, b=b)
 
             # Generate random position
-            x = str(random.randint(100, window.winfo_screenwidth() - 100))
-            y = str(random.randint(100, window.winfo_screenheight() - 100))
+            x = str(random.randint(0, window.winfo_screenwidth() - 100))
+            y = str(random.randint(0, window.winfo_screenheight() - 100))
             window.geometry("330x270+{0}+{1}".format(x, y))
 
             # Draw a stretched Granny face
