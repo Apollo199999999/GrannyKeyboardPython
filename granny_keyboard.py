@@ -2,17 +2,17 @@ import tkinter as tk
 from pynput import keyboard
 import random
 
-window = False
+open_window = False
 
 def key_press(key):
     # Indicate to spawn_window() that we should spawn a window
-    global window
-    window = True
+    global open_window
+    open_window = True
 
 def spawn_window():
-    global window
+    global open_window
     while True:
-        if  window == True:
+        if open_window == True:
             # Spawn window on keydown
             window = tk.Toplevel()
             window.title('Granny')
@@ -23,7 +23,9 @@ def spawn_window():
             y = str(random.randint(200, window.winfo_screenheight() - 200))
             window.geometry("300x200+{0}+{1}".format(x, y))
 
-            window = False
+
+
+            open_window = False
             
         # Update root no matter what so stuff doesnt freeze up
         root.update()
