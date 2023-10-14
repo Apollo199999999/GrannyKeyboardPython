@@ -70,7 +70,7 @@ def spawn_window():
             # Generate random position
             x = str(random.randint(100, window.winfo_screenwidth() - 100))
             y = str(random.randint(100, window.winfo_screenheight() - 100))
-            window.geometry("300x270+{0}+{1}".format(x, y))
+            window.geometry("330x270+{0}+{1}".format(x, y))
 
             # Draw a stretched Granny face
             # Create a canvas widget
@@ -88,14 +88,16 @@ def spawn_window():
             lbl.place(anchor="center", relx=0.5, y=160)
 
             # Add buttons
-            acknowledge_btn = tk.Button(window, text="I acknowledge that Granny is my God", command=window.destroy)
+            acknowledge_btn = tk.Button(window, text=" I acknowledge that Granny is my God ", 
+                                        fg="#4cc241", bg="#ff00ff", command=window.destroy)
             acknowledge_btn.place(anchor="center", relx=0.5, y=205)
-            acknowledge_btn["font"] = font.Font(size=11)
+            acknowledge_btn["font"] = font.Font(family="RansomNote", size=12)
 
-            no_btn = tk.Button(window, text=" No ")
+            no_btn = tk.Button(window, text=" No ", 
+                               fg="#e1d80a", bg="#cd853f")
             no_btn.place(anchor="center", relx=0.5, y=245)
             no_btn["state"] = "disabled"
-            no_btn["font"] = font.Font(size=11)
+            no_btn["font"] = font.Font(family="RansomNote", size=11)
 
             # Add this window to opened window instances array
             window_instances.append(window)
