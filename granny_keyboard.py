@@ -1,7 +1,6 @@
 import tkinter as tk
 from pynput import keyboard
 import random
-from PIL import ImageTk, Image
 
 open_window = False
 
