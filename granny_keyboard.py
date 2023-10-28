@@ -106,9 +106,10 @@ def spawn_window():
             open_window = False
 
         if close_window == True:
-            # Remove the last window
-            window_instances[len(window_instances) - 1].destroy()
-            window_instances.pop()
+            if len(window_instances) > 0:
+                # Remove the last window
+                window_instances[len(window_instances) - 1].destroy()
+                window_instances.pop()
 
             # Set close_window to false
             close_window = False
